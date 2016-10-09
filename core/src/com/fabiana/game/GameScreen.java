@@ -12,13 +12,14 @@ public class GameScreen extends ScreenAdapter{
     private Texture pacmanImg;
     private World world;
     private Pacman pacman;
+    private WorldRenderer worldRenderer;
 
 
     public GameScreen(PacmanGame pacmangame){
-        this.pacmanGame = pacmangame;
-        pacmanImg = new Texture("pacman.png");
+        this.pacmanGame = pacmangame;        
         world = new World(pacmanGame);
         pacman = world.getPacman();
+        worldRenderer = new WorldRenderer(pacmanGame,world);
     }
 
     public void update(float delta){
@@ -38,14 +39,14 @@ public class GameScreen extends ScreenAdapter{
 
     @Override
     public void render(float delta){
+        
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
         update(delta);
-        SpriteBatch batch = pacmanGame.batch;
-        batch.begin();
-        Vector2 pos = pacman.getPosition();
-        batch.draw(pacmanImg, pos.x, pos.y);
-        batch.end();
+      
+        worldRenderer.render(delta);
+        
 
     }
 
