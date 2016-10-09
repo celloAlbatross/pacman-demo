@@ -23,17 +23,28 @@ public class GameScreen extends ScreenAdapter{
     }
 
     public void update(float delta){
-        if(Gdx.input.isKeyPressed(Keys.LEFT)){
-          pacman.move(pacman.DIRECTION_LEFT);
-        }
-        if(Gdx.input.isKeyPressed(Keys.RIGHT)){
-          world.getPacman().move(pacman.DIRECTION_RIGHT);
-        }
-        if(Gdx.input.isKeyPressed(Keys.DOWN)){
-          world.getPacman().move(pacman.DIRECTION_DOWN);
-        }
-        if(Gdx.input.isKeyPressed(Keys.UP)){
-          world.getPacman().move(pacman.DIRECTION_UP);
+        
+        updatePacmanDirection();
+               
+        world.update(delta);
+    }
+    
+    private void updatePacmanDirection(){
+        if(Gdx.input.isKeyPressed(Keys.ANY_KEY)){
+            if(Gdx.input.isKeyPressed(Keys.LEFT)){
+              pacman.setNextDirection(pacman.DIRECTION_LEFT);          
+            }
+            if(Gdx.input.isKeyPressed(Keys.RIGHT)){
+              pacman.setNextDirection(pacman.DIRECTION_RIGHT);
+            }
+            if(Gdx.input.isKeyPressed(Keys.DOWN)){
+              pacman.setNextDirection(pacman.DIRECTION_DOWN);
+            }
+            if(Gdx.input.isKeyPressed(Keys.UP)){
+              pacman.setNextDirection(pacman.DIRECTION_UP);
+            }
+        }else{
+            pacman.setNextDirection(pacman.DIRECTION_STILL);
         }
     }
 
@@ -46,8 +57,6 @@ public class GameScreen extends ScreenAdapter{
         update(delta);
       
         worldRenderer.render(delta);
-        
-
     }
 
 
