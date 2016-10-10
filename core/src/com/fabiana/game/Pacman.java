@@ -36,6 +36,9 @@ public class Pacman {
         if(isAtCenter()){
             if(canMoveInDirection(nextDirection)){
                 currentDirection = nextDirection;
+                if(maze.hasDotAt(getRow(), getColum())){
+                    maze.removeDotAt(getRow(), getColum());
+                }
             }else{
                 currentDirection = DIRECTION_STILL;
             }
