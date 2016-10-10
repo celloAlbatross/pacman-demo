@@ -12,10 +12,11 @@ public class World {
 
     World(PacmanGame pacmanGame) {
         this.pacmanGame = pacmanGame;
-           
-        pacman = new Pacman(60,60);
         
         maze = new Maze();
+           
+        pacman = new Pacman(60,60,maze);
+        
     }
 
     Pacman getPacman() {
