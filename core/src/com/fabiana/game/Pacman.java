@@ -1,6 +1,8 @@
 package com.fabiana.game;
 
 import com.badlogic.gdx.math.Vector2;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Pacman {
     private Vector2 position;
@@ -15,6 +17,7 @@ public class Pacman {
     private int currentDirection;
     private int nextDirection;
     private World world;
+    private List<DotEattenListener> listeners;
     
     private int getRow(){
         return ((int)position.y) / WorldRenderer.BLOCK_SIZE;
@@ -39,6 +42,8 @@ public class Pacman {
         nextDirection = DIRECTION_STILL;
         
         this.world = world;
+        
+        listeners = new LinkedList<DotEattenListener>();
     }
      
     public void update(){
@@ -48,7 +53,7 @@ public class Pacman {
                 currentDirection = nextDirection;
                 if(maze.hasDotAt(getRow(), getColum())){
                     maze.removeDotAt(getRow(), getColum());
-                    world.increaseScore();
+                    notifyDotEattenListeners();
                 }
             }else{
                 currentDirection = DIRECTION_STILL;
@@ -80,6 +85,20 @@ public class Pacman {
         int newCol = getColum()+ DIR_DIFF[dir][0];
         return !(maze.hasWallAt(newRow, newCol));
 //        return true;
+    }
+    
+    public void registerDotEattenListener(DotEattenListener l){
+        listeners.add(l);
+    }
+    
+    private void notifyDotEattenListeners(){
+        for(DotEattenListener l: listeners){
+            l.notifyDotEatten();
+        }
+    }
+    
+    public interface DotEattenListener{
+        void notifyDotEatten();
     }
     
     

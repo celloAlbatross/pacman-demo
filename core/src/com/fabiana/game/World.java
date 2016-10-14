@@ -19,6 +19,8 @@ public class World {
         pacman = new Pacman(60,60,this);
         score = 0;
         
+        registerDotEattenListener();
+        
     }
 
     Pacman getPacman() {
@@ -35,5 +37,14 @@ public class World {
     
     public int getScore(){
         return score;
+    }
+    
+    private  void registerDotEattenListener(){
+        pacman.registerDotEattenListener(new Pacman.DotEattenListener() {
+            @Override
+            public void notifyDotEatten() {
+                score += 1;
+            }
+        });
     }
 }
